@@ -1,0 +1,29 @@
+# Central project configuration (starter template)
+
+project:
+  name: "ai-medical-xray-classification"
+  random_seed: 42
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  image_size: 224
+  num_classes: 3
+  class_names: ["COVID-19", "Viral Pneumonia", "Normal"]
+
+model:
+  type: "transfer_learning"  # options: cnn, transfer_learning
+  backbone: "resnet18"
+  pretrained: true
+
+training:
+  batch_size: 16
+  epochs: 10
+  learning_rate: 0.001
+  device: "cpu"  # change to "cuda" if GPU is available
+
+outputs:
+  model_dir: "outputs/models"
+  figures_dir: "outputs/figures"
+  reports_dir: "outputs/reports"
+
