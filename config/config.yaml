@@ -18,7 +18,7 @@ data:
     - "Insulin"
     - "BMI"
   use_smote: true
-  n_features_to_select: 8  # use all 8 clinical features as MLP input
+  n_features_to_select: 5  # top-5 by averaged ANOVA + RF rank
 
 model:
   type: "all"          # options: logistic_regression, random_forest, mlp, all
@@ -32,6 +32,14 @@ training:
   learning_rate: 0.001
   device: "cpu"        # change to "cuda" if GPU is available
   patience: 10         # early stopping patience for MLP
+
+hyperparameter_tuning:
+  enabled: true        # run GridSearchCV for Random Forest
+  cv_folds: 5
+
+cross_validation:
+  cv_folds: 5
+  scoring: "f1"
 
 outputs:
   model_dir: "outputs/models"
