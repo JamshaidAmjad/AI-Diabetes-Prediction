@@ -30,5 +30,6 @@ outputs/reports/*
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
+!data/raw/diabetes.csv
 !data/processed/.gitkeep
 

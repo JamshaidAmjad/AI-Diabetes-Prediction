@@ -1,20 +1,28 @@
-# AI Medical X-ray Classification
+# AI Diabetes Prediction
 
 ## Project Overview
-This repository is a team scaffold for a Master's-level **AI in Healthcare** project.
-The goal is to build a medical decision support system for chest X-ray image classification.
+A Master's-level **AI in Healthcare** project building a medical decision support system for early diabetes prediction using the Pima Indians Diabetes dataset.
 
 ## Problem Statement
-We aim to classify chest X-ray images into three classes:
-- `COVID-19`
-- `Viral Pneumonia`
-- `Normal`
+Predict whether a patient has diabetes based on tabular clinical features:
 
-This project will explore deep learning approaches suitable for healthcare imaging tasks.
+| Feature | Description |
+|---|---|
+| Pregnancies | Number of pregnancies |
+| Glucose | Plasma glucose concentration |
+| BloodPressure | Diastolic blood pressure (mm Hg) |
+| SkinThickness | Triceps skin fold thickness (mm) |
+| Insulin | 2-hour serum insulin (mu U/ml) |
+| BMI | Body mass index |
+| DiabetesPedigreeFunction | Diabetes pedigree function |
+| Age | Age in years |
+| **Outcome** | **Target: 1 = Diabetes, 0 = No Diabetes** |
 
-## Planned Modeling Approach
-- Baseline Convolutional Neural Network (CNN)
-- Transfer Learning with pretrained CNN backbones (PyTorch)
+## Modeling Approach
+Three complementary models are trained and compared:
+1. **Logistic Regression** — interpretable linear baseline
+2. **Random Forest** — ensemble, non-linear, handles feature interactions
+3. **MLP (Neural Network)** — small feed-forward network with early stopping
 
 ## Repository Structure
 ```text
@@ -22,63 +30,74 @@ project-root/
 |
 |-- data/
 |   |-- raw/
-|   `-- processed/
+|   |   `-- diabetes.csv        ← source dataset
+|   `-- processed/              ← imputed, scaled, SMOTE-balanced splits (.npy)
 |
 |-- notebooks/
+|   `-- eda.ipynb               ← exploratory data analysis
 |
 |-- src/
 |   |-- data/
-|   |   `-- dataset.py
+|   |   `-- dataset.py          ← preprocessing pipeline (impute, scale, select, SMOTE)
 |   |-- models/
-|   |   `-- model.py
+|   |   `-- model.py            ← LR, RF, and MLP definitions
 |   |-- training/
-|   |   `-- train.py
+|   |   `-- train.py            ← training entry point for all models
 |   |-- evaluation/
-|   |   `-- evaluate.py
+|   |   `-- evaluate.py         ← metrics, confusion matrices, JSON report
 |   `-- utils/
+|       `-- __init__.py         ← set_seed, plot_training_history, save_metrics
 |
 |-- outputs/
-|   |-- models/
-|   |-- figures/
-|   `-- reports/
+|   |-- models/                 ← saved model files (.pkl / .pt)
+|   |-- figures/                ← confusion matrices, training curves, EDA plots
+|   `-- reports/                ← evaluation_results.json
 |
 |-- config/
-|   `-- config.yaml
+|   `-- config.yaml             ← centralized configuration
 |
 |-- tests/
+|   |-- test_dataset.py
+|   |-- test_models.py
+|   `-- test_evaluation.py
 |
 |-- README.md
 |-- requirements.txt
 `-- .gitignore
 ```
 
-## Folder Responsibilities
-- `data/raw/`: Original dataset files (not committed)
-- `data/processed/`: Preprocessed data artifacts
-- `notebooks/`: EDA, experiments, and visual analysis
-- `src/data/`: Dataset and data-loading logic
-- `src/models/`: Model definitions (CNN and transfer learning wrappers)
-- `src/training/`: Training entry points and loops
-- `src/evaluation/`: Metrics and evaluation scripts
-- `src/utils/`: Shared utility functions
-- `outputs/`: Saved models, figures, and reports
-- `config/`: Centralized configuration files
-- `tests/`: Unit/integration test placeholders
-
-## Quick Start (Placeholder)
-1. Create and activate a Python virtual environment.
+## Quick Start
+1. Create and activate a Python virtual environment:
+   ```bash
+   python -m venv .venv && source .venv/bin/activate
+   ```
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-3. Add data files to `data/raw/`.
-4. Update `config/config.yaml` as needed.
-5. Run placeholder training script:
+3. Place `diabetes.csv` in `data/raw/` (already committed).
+4. Train all models:
    ```bash
    python -m src.training.train
    ```
+5. Evaluate on the held-out test set:
+   ```bash
+   python -m src.evaluation.evaluate
+   ```
+6. Run tests:
+   ```bash
+   pytest tests/
+   ```
+
+## Data Pipeline
+The preprocessing pipeline (`src/data/dataset.py`) applies these steps in order — all fitted **only on training data** to prevent leakage:
+
+1. Replace biologically impossible zeros with `NaN` (Glucose, BMI, Insulin, etc.)
+2. Stratified 70 / 15 / 15 train-val-test split
+3. Median imputation of missing values
+4. StandardScaler normalization
+5. Feature selection: top-5 features by averaged ANOVA F-test + Random Forest rank
+6. SMOTE oversampling to address class imbalance (training set only)
 
 ## Team Notes
-This scaffold is intentionally minimal so team members can implement modules in parallel.
-Please keep changes modular and documented.
-
+Keep changes modular. Each module (`dataset`, `model`, `train`, `evaluate`) is independently runnable. Configuration lives in `config/config.yaml`.
