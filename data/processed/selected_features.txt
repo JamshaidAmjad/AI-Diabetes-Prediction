@@ -1,0 +1,5 @@
+Glucose
+BMI
+Insulin
+Age
+Pregnancies
