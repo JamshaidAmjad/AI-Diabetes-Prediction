@@ -18,18 +18,21 @@ env/
 .vscode/
 .idea/
 
-# Output artifacts
+# Output artifacts — commit EDA figures, ignore trained model binaries and reports
 outputs/models/*
 outputs/figures/*
 outputs/reports/*
 !outputs/models/.gitkeep
 !outputs/figures/.gitkeep
+!outputs/figures/*.png
 !outputs/reports/.gitkeep
 
-# Data files (keep structure only)
+# Data files — commit processed splits and source CSV, ignore large binaries
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/raw/diabetes.csv
 !data/processed/.gitkeep
+!data/processed/*.npy
+!data/processed/selected_features.txt
 
