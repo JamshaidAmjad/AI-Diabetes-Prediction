@@ -63,7 +63,7 @@ md("""\
 
 **Course:** M7016H — Artificial Intelligence within the Healthcare System
 **Dataset:** Pima Indians Diabetes Dataset (Dataset 4)
-**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel
+**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel, Suresh Balaraman
 
 ---
 
@@ -418,7 +418,7 @@ md("""\
 
 **Course:** M7016H — Artificial Intelligence within the Healthcare System
 **Dataset:** Pima Indians Diabetes Dataset (Dataset 4)
-**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel
+**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel, Suresh Balaraman
 
 ---
 
@@ -748,7 +748,7 @@ md("""\
 
 **Course:** M7016H — Artificial Intelligence within the Healthcare System
 **Dataset:** Pima Indians Diabetes Dataset (Dataset 4)
-**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel
+**Authors:** Jamshaid Amjad, Shameena Mohammed Nabeel, Suresh Balaraman
 
 ---
 
