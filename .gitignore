@@ -27,6 +27,8 @@ outputs/reports/*
 !outputs/figures/*.png
 !outputs/reports/.gitkeep
 !outputs/reports/*.json
+!outputs/reports/*.docx
+!outputs/reports/*.pptx
 
 # Data files — commit processed splits and source CSV, ignore large binaries
 data/raw/*
