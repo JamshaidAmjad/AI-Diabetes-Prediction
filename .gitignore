@@ -18,7 +18,7 @@ env/
 .vscode/
 .idea/
 
-# Output artifacts — commit EDA figures, ignore trained model binaries and reports
+# Output artifacts — commit figures and reports, ignore large trained model binaries
 outputs/models/*
 outputs/figures/*
 outputs/reports/*
@@ -26,6 +26,7 @@ outputs/reports/*
 !outputs/figures/.gitkeep
 !outputs/figures/*.png
 !outputs/reports/.gitkeep
+!outputs/reports/*.json
 
 # Data files — commit processed splits and source CSV, ignore large binaries
 data/raw/*
