@@ -27,8 +27,14 @@ from src.models.model import MLP
 def compute_metrics(
     y_true: np.ndarray, y_pred: np.ndarray, y_prob: np.ndarray = None
 ) -> Dict[str, float]:
+ cm = confusion_matrix(y_true, y_pred)
+    tn, fp, fn, tp = cm.ravel()
+    sensitivity = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
     metrics = {
         "accuracy": round(accuracy_score(y_true, y_pred), 4),
+        "sensitivity": round(sensitivity, 4),
+        "specificity": round(specificity, 4),
         "precision": round(precision_score(y_true, y_pred, zero_division=0), 4),
         "recall": round(recall_score(y_true, y_pred, zero_division=0), 4),
         "f1_score": round(f1_score(y_true, y_pred, zero_division=0), 4),
