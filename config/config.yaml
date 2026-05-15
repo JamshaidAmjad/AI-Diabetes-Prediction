@@ -1,0 +1,47 @@
+# Central project configuration — Diabetes Prediction
+
+project:
+  name: "ai-diabetes-prediction"
+  random_seed: 42
+
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  filename: "diabetes.csv"
+  target_column: "Outcome"
+  val_split: 0.15
+  test_split: 0.15
+  zero_as_missing:
+    - "Glucose"
+    - "BloodPressure"
+    - "SkinThickness"
+    - "Insulin"
+    - "BMI"
+  use_smote: true
+  n_features_to_select: 5  # top-5 by averaged ANOVA + RF rank
+
+model:
+  type: "all"          # options: logistic_regression, random_forest, mlp, all
+  mlp_hidden_dims: [16, 8]  # Dense(16) → Dense(8) → Dense(1) + Sigmoid
+  mlp_dropout: 0.2
+  rf_n_estimators: 300
+
+training:
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  device: "cpu"        # change to "cuda" if GPU is available
+  patience: 10         # early stopping patience for MLP
+
+hyperparameter_tuning:
+  enabled: true        # run GridSearchCV for Random Forest
+  cv_folds: 5
+
+cross_validation:
+  cv_folds: 5
+  scoring: "f1"
+
+outputs:
+  model_dir: "outputs/models"
+  figures_dir: "outputs/figures"
+  reports_dir: "outputs/reports"
